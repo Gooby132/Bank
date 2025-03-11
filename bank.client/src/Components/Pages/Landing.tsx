@@ -1,4 +1,4 @@
-import { Button, Center, Container, Stack, Text } from "@mantine/core";
+import { Button, Center, Container, Stack, Text, Title } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { LOGIN_ROUTE, REGISTER_ROUTE } from "../Routing/Routes";
 
@@ -9,6 +9,7 @@ export const Landing = (props: Props) => {
     <Container>
       <Center>
         <Stack gap={"md"}>
+          <Title>הבנק</Title>
           <Text>ברוכים הבאים</Text>
           <Button component={Link} to={LOGIN_ROUTE}>
             התחברות
