@@ -13,11 +13,13 @@ import { Notifications } from "@mantine/notifications";
 import { Link, Outlet } from "react-router-dom";
 import { CiBank } from "react-icons/ci";
 import { LANDING_ROUTE, LOGIN_ROUTE, PERSONAL_ROUTE } from "../Routing/Routes";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
+import { userActions } from "../../Redux/features/User/userSlice";
 
 export const App = () => {
   const HEADER_SIZE = 64;
+  const dispatcher = useDispatch();
   const user = useSelector((state: RootState) => state.userSlice);
 
   return (
@@ -36,17 +38,17 @@ export const App = () => {
                 <CiBank />
                 <Text ps={8}>Bank</Text>
               </Button>
-              {user.token && (
+              {user.user && (
                 <Group>
                   <Button component={Link} to={PERSONAL_ROUTE}>
                     <FaUser />
                   </Button>
-                  <Button>
+                  <Button onClick={() => {dispatcher(userActions.logoutUser())}}>
                     <CiLogout />
                   </Button>
                 </Group>
               )}
-              {!user.token && (
+              {!user.user && (
                 <Button component={Link} to={LOGIN_ROUTE}>
                   <CiLogin />
                 </Button>

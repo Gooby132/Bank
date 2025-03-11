@@ -1,13 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { UserDto } from "../../../Services/UserClient/userContracts";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  AccountDto,
+  UserDto,
+  UserMakeTransactionResponse,
+} from "../../../Services/UserClient/userContracts";
 
 type UserState = {
-  token?: string;
   user?: UserDto;
 };
 
 const initialState: UserState = {
-  token: undefined,
   user: undefined,
 };
 
@@ -15,12 +17,13 @@ export const user = createSlice({
   name: "user",
   initialState: initialState,
   reducers: {
-    loginUser: (state, action) => {
-      state.token = action.payload.token;
-      state.user = action.payload.user;
+    updateTransactions: (state, action: PayloadAction<AccountDto>) => {
+      if (state.user?.account) state.user.account = action.payload;
+    },
+    loginUser: (state, action: PayloadAction<UserDto>) => {
+      state.user = action.payload;
     },
     logoutUser: (state) => {
-      state.token = undefined;
       state.user = undefined;
     },
   },

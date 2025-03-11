@@ -19,16 +19,12 @@ type Props = {};
 
 export const Login = (props: Props) => {
   const [response, isLoading, login] = useLoginUser();
-  const form = useForm<UserLoginRequest & {
-    confirmPassword: string;
-  }>({
+  const form = useForm<UserLoginRequest >({
     initialValues: {
       tz: "",
       password: "",
-      confirmPassword: ""
     },
   });
-
 
   return (
     <Container>

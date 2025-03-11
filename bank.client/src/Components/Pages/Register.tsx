@@ -14,6 +14,7 @@ import { LOGIN_ROUTE } from "../Routing/Routes";
 import { Link } from "react-router-dom";
 import { DateInput } from "@mantine/dates";
 import { useRegisterUser } from "../../Hooks/User/useRegisterUser";
+import { rules } from "../../rules";
 
 type Props = {};
 
@@ -26,11 +27,20 @@ export const Register = (props: Props) => {
         tz: "",
         fullName: "",
         englishFullName: "",
-        accounts: [],
-        birthDate: "",
+        birthDateInUtc: "",
+        account: { currency: 0, id: 0, operations: [] },
       },
       password: "",
       confirmPassword: "",
+    },
+    validate: {
+      user: {
+        fullName: rules.user.fullName,
+        englishFullName: rules.user.englishFullName,
+        tz: rules.user.tz,
+      },
+      password: (value, values) =>
+        rules.user.password(value, values.confirmPassword),
     },
   });
 
@@ -46,9 +56,9 @@ export const Register = (props: Props) => {
             key={form.key("user.tz")}
             label="תעודת זהות"
             description="9 ספרות בלבד"
-            {...form.getInputProps("tz")}
+            {...form.getInputProps("user.tz")}
           ></TextInput>
-          
+
           <TextInput
             key={form.key("user.fullName")}
             label="שם מלא"
@@ -65,10 +75,10 @@ export const Register = (props: Props) => {
           />
 
           <DateInput
-            key={form.key("user.birthDate")}
+            key={form.key("user.birthDateInUtc")}
             label="תאריך לידה"
             maxDate={new Date()}
-            {...form.getInputProps("user.birthDate")}
+            {...form.getInputProps("user.birthDateInUtc")}
           />
 
           <PasswordInput
